@@ -2,10 +2,12 @@
 package processor
 
 import (
+	"encoding/hex"
 	"fmt"
 	"os"
 	"time"
 
+	"github.com/fbsobreira/gotron-sdk/pkg/address"
 	"github.com/fbsobreira/gotron-sdk/pkg/client"
 	"github.com/fbsobreira/gotron-sdk/pkg/proto/api"
 	"github.com/fbsobreira/gotron-sdk/pkg/proto/core"
@@ -20,13 +22,28 @@ func ProcessBlocks(bch <-chan *api.BlockExtention, stopch <-chan bool, client *c
 		case block := <-bch:
 			fmt.Printf("Block %d num txs: %d\n", block.BlockHeader.RawData.Number, len(block.Transactions))
 			for _, tx := range block.Transactions {
-				iss, err := client.GetAssetIssueByID(AssetName(tx))
-				if err != nil || iss == nil {
-					fmt.Printf("Failed to get asset issue: %v\n", err)
-					continue
+				contracts := tx.Transaction.RawData.GetContract()
+				for _, c := range contracts {
+					if c == nil {
+						continue
+					}
+					switch c.Type {
+					case core.Transaction_Contract_TriggerSmartContract:
+						contract := &core.TriggerSmartContract{}
+						err := c.GetParameter().UnmarshalTo(contract)
+						if err != nil {
+							fmt.Printf("Failed to parse trigger contract: %v\n", err)
+							continue
+						}
+						ca := address.Address(contract.GetContractAddress()).String()
+						if ca == "TWekn39KVnSrRML6Sq3xQ5BCJVhYCmoHdb" || ca == "TTfvyrAz86hbZk5iDpKD78pqLGgi8C7AAw" {
+							fmt.Printf("Found contract match! %s\n", hex.EncodeToString(tx.Txid))
+						}
+					default:
+						// pass
+					}
 				}
-				fmt.Printf("Asset Issue: %+v\n", iss)
-				panic("stop")
+				// contractAddr := address.Address(c.([]uint8)).String()
 			}
 		}
 	}
