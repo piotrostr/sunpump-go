@@ -2,7 +2,12 @@ module github.com/piotrostr/trx/sunpump
 
 go 1.22.5
 
-require github.com/distributed-lab/tron-sdk v0.1.0
+require (
+	github.com/distributed-lab/tron-sdk v0.1.0
+	github.com/fbsobreira/gotron-sdk v0.0.0-20230714102740-d3204bd08259
+	github.com/spf13/cobra v1.0.0
+	google.golang.org/protobuf v1.30.0
+)
 
 require (
 	github.com/Groestlcoin/go-groestl-hash v0.0.0-20181012171753-790653ac190c // indirect
@@ -11,11 +16,11 @@ require (
 	github.com/deckarep/golang-set v1.8.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/ethereum/go-ethereum v1.12.2 // indirect
-	github.com/fbsobreira/gotron-sdk v0.0.0-20230714102740-d3204bd08259 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/holiman/uint256 v1.2.3 // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/martinboehm/btcutil v0.0.0-20211010173611-6ef1889c1819 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
@@ -23,6 +28,7 @@ require (
 	github.com/rjeczalik/notify v0.9.3 // indirect
 	github.com/shengdoushi/base58 v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
 	gitlab.com/distributed_lab/logan v3.8.1+incompatible // indirect
 	go.uber.org/atomic v1.6.0 // indirect
@@ -36,5 +42,4 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20230525234035-dd9d682886f9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect
 	google.golang.org/grpc v1.57.0 // indirect
-	google.golang.org/protobuf v1.30.0 // indirect
 )
